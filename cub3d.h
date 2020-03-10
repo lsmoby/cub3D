@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 15:58:42 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/03/01 22:07:52 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/03/10 15:44:15 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,9 +161,9 @@ int				g_num_rays;
 t_cast_data		g_ray;
 t_player		g_player;
 t_game_data		g_game_data;
-int				*g_textures[5];
 t_img_data		g_img;
 int				g_ray_distance[5120];
+int				*g_textures[5];
 
 void			drawsquare(int x,int y ,int color);
 void			mlx_img_mod(int x, int y, int color);
@@ -222,10 +222,10 @@ char			*skip_blanks(char *str);
 void			skip_digits(char **line);
 void			skip_digits2(char ***line);
 void			check_max_w(char *line);
-int				store_resolution(char *line);
+int				store_resolution(char **line);
 void			check_max_h(char *line);
 int				fill_f(char **line);
-int				store_f(char *line);
+int				store_f(char **line);
 int				store_ea(char *line);
 int				store_we(char *line);
 int				store_so(char *line);
@@ -234,7 +234,7 @@ char			*skip_blanks(char *str);
 int				store_map(char ***line);
 int				map_size(char **line);
 int				store_s(char *line);
-int				store_c(char *line);
+int				store_c(char **line);
 int				fill_c(char **line);
 void			check_p(char *map, int *p);
 char			*ft_strdup(const char *src);

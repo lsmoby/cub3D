@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 15:40:32 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/03/02 15:40:52 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:30:54 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,21 @@ int		map_check2(char *buffer)
 {
 	while (*buffer)
 	{
-		if (ft_comp(buffer, "1 1 1"))
+		if (*buffer == '\n' && buffer++ &&
+			(*buffer == ' ' || *buffer == '1'))
 			while (*buffer)
 			{
 				if (ft_comp(buffer, "\n\n"))
-					while (*buffer)
-					{
-						if (!ft_strchr(" \n\t", *buffer))
-							return (-1);
-						buffer++;
-					}
-				if (*buffer == '\0')
-					return (1);
+					return (-1);
 				buffer++;
 			}
 		if (*buffer == '\0')
 			return (1);
 		buffer++;
 	}
+	if (*buffer == '\0')
+		return (1);
+	buffer++;
 	return (1);
 }
 

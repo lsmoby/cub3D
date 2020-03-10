@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 15:40:45 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/03/02 15:40:51 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/03/04 20:20:02 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,33 @@ void	check_max_h(char *line)
 				1440 : g_game_data.res.height;
 }
 
-int		store_resolution(char *line)
+int		store_resolution(char **line)
 {
 	int x;
 
 	x = g_game_data.check;
 	if ((x = (x & 0x00000001)) && (x == 0x00000001))
 		return (-1);
-	line = skip_blanks(line);
-	if (ft_isdigit(*line) && (g_game_data.check =
+	*line = skip_blanks(*line);
+	if (ft_isdigit(**line) && (g_game_data.check =
 		(g_game_data.check | 0x00000001)))
 	{
-		check_max_w(line);
-		skip_digits(&line);
-		line = skip_blanks(line);
-		if (ft_isdigit(*line))
-			check_max_h(line);
+		check_max_w(*line);
+		skip_digits(line);
+		*line = skip_blanks(*line);
+		if (ft_isdigit(**line))
+			check_max_h(*line);
 		else
 			return (-1);
 	}
 	else
 		return (-1);
-	skip_digits(&line);
-	line = skip_blanks(line);
-	if (!ft_strchr("\n \t\0", *line))
+	skip_digits(line);
+	*line = skip_blanks(*line);
+	if (!ft_strchr("\n \t\0", **line))
 		return (-1);
+	else
+		(line)++;
 	return (1);
 }
 
@@ -81,7 +83,7 @@ int		fill_f(char **line)
 	return (1);
 }
 
-int		store_f(char *line)
+int		store_f(char **line)
 {
 	int x;
 	int ret;
@@ -90,10 +92,12 @@ int		store_f(char *line)
 	x = g_game_data.check;
 	if ((x = (x & 0x00000010)) && (x == 0x00000010))
 		return (-1);
-	line = skip_blanks(line);
-	ret = fill_f(&line);
-	line = skip_blanks(line);
-	if (!ft_strchr("\n \t\0", *line))
+	*line = skip_blanks(*line);
+	ret = fill_f(line);
+	*line = skip_blanks(*line);
+	if (!ft_strchr("\n \t\0", **line))
 		return (-1);
+	else
+		(line)++;
 	return (ret);
 }

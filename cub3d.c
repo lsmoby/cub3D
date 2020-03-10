@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 15:06:30 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/03/01 22:13:26 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/03/10 19:48:43 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int		iswall(float x, float y)
 		&& ytemp <= g_game_data.map.rows && ytemp >= 0)
 		return (g_game_data.map.map[xtemp +
 			(ytemp * g_game_data.map.columns)] == '1');
-	return(0);
+	return (0);
 }
 
 int		iswallplayer(float x, float y)
@@ -308,10 +308,10 @@ void	cast_ray(float angle)
 			g_ray.v_ray_data.verthitdistance;
 	g_ray.washitvertical = (g_ray.v_ray_data.verthitdistance <
 		g_ray.h_ray_data.horzhitdistance);
- 	//  if (g_ray.v_ray_data.verthitdistance > g_ray.h_ray_data.horzhitdistance)
- 	//  	draw_line1(g_player.x, g_player.y, g_ray.h_ray_data.horzwallhitx, g_ray.h_ray_data.horzwallhity, 0xff0000);
- 	//  else
- 	//  	draw_line1(g_player.x, g_player.y, g_ray.v_ray_data.vertwallhitx, g_ray.v_ray_data.vertwallhity, 0xff0000);
+//  	 if (g_ray.v_ray_data.verthitdistance > g_ray.h_ray_data.horzhitdistance)
+//  	 	draw_line1(g_player.x, g_player.y, g_ray.h_ray_data.horzwallhitx, g_ray.h_ray_data.horzwallhity, 0xff0000);
+//  	 else
+//  	 	draw_line1(g_player.x, g_player.y, g_ray.v_ray_data.vertwallhitx, g_ray.v_ray_data.vertwallhity, 0xff0000);
 }
 
 void	fill_texture(void)
@@ -321,23 +321,24 @@ void	fill_texture(void)
 	int			a;
 	int			b;
 
-	a = T_S;
-	b = T_S;
 	tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.no, &a, &b);
 	g_textures[0] = (int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
-	tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.so, &a, &b);
-	g_textures[1] = (int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
-	tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.ea, &a, &b);
-	g_textures[2] = (int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
-	tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.we, &a, &b);
-	g_textures[3] = (int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
-	tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.s, &a, &b);
-	g_textures[4] = (int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
+	// tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.so, &a, &b);
+	// g_textures[1] = (int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
+	// tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.ea, &a, &b);
+	// g_textures[2] = (int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
+	// tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.we, &a, &b);
+	// g_textures[3] = (int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
+	// tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.s, &a, &b);
+	// g_textures[4] = (int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
 }
 
 void	react(float x, float y, float max)
 {
 	int		i;
+	int		color;
+	int		xoffset;
+	int		yoffset;
 
 	i = -1;
 	while (++i < max)
@@ -345,18 +346,23 @@ void	react(float x, float y, float max)
 		y + i <= g_game_data.res.height && ((i + y) * g_game_data.res.width +
 		x <= g_game_data.res.width * g_game_data.res.height))
 		{
-			if (g_ray.rayleft && g_ray.washitvertical)
-				img_update(x, y + i, 0x455561);
-			else if (g_ray.rayright && g_ray.washitvertical)
-				img_update(x, y + i, 0x4bb917);
-			else if (g_ray.rayup && !g_ray.washitvertical)
-				img_update(x, y + i, 0xc6d8ff);
-			else if (g_ray.raydown && !g_ray.washitvertical)
+			if (g_ray.washitvertical)
+			{
+				xoffset = (int)(g_ray.wallhity % T_S);
+				yoffset = (int)((y + i) - max) * ((float)T_S / max);
+				color = g_textures[0][(T_S * yoffset) + xoffset];
+				(g_ray.rayleft) ? img_update(x, y + i, color) :
+					img_update(x, y + i, 0x4bb917);
+			}
+			else
+			{
+				xoffset = (int)(g_ray.wallhitx % T_S);
+				(g_ray.rayup) ? img_update(x, y + i, 0xc6d8ff) :
 				img_update(x, y + i, 0x5E0035);
+			}
 		}
-	i = max;
-	while ((++i < g_game_data.res.width))
-		img_update(x, y + i, 0x0d3842);
+	while ((++max < g_game_data.res.width))
+		img_update(x, y + max, 0x0d3842);
 	while (--y >= 0 && (y < g_game_data.res.width))
 		img_update(x, y, 0xb07e59);
 }
@@ -469,6 +475,7 @@ int		main(int argc, char **argv)
 	g_img.img_ptr = mlx_new_image(g_mlx_ptr, g_game_data.res.width, g_game_data.res.height);
 	g_img.addr = mlx_get_data_addr(g_img.img_ptr, &g_img.bpp, &g_img.line_length, &g_img.endian);
 	init_player_pos();
+	fill_texture();
 	mlx_hook(g_win_ptr, 2, 1L<<0, key_pressed, (void *)0);
 	mlx_hook(g_win_ptr, 3, 1L<<1, key_released, (void *)0);
 	mlx_hook(g_win_ptr, 17, 0L, destroy_window, (void *)0);
