@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 15:41:24 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/03/10 16:19:15 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/03/10 20:28:38 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		map_check(void)
 		j = 1;
 		while (j < g_game_data.map.columns - 1)
 		{
-			printf("%c\n", map[j + (i * g_game_data.map.columns)]);
+			// printf("%c\n", map[j + (i * g_game_data.map.columns)]);
 			if (ft_strchr("NSWE",
 			map[j + (i * g_game_data.map.columns)]))
 				p++;

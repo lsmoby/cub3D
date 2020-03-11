@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 15:58:42 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/03/10 15:44:15 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/03/11 18:27:25 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,18 +143,25 @@ typedef struct	s_textures
 	int		width;
 	int		height;
 	int		*addr;
-	int     bpp;
-	int     line_length;
-	int     endian;
+	int		bpp;
+	int		line_length;
+	int		endian;
 }				t_textures;
 typedef struct	s_img_data
 {
 	void		*img_ptr;
-	char		*addr;
-	int         bpp;
-	int         line_length;
-	int         endian;
+	int			*addr;
+	int			bpp;
+	int			line_length;
+	int			endian;
 }				t_img_data;
+typedef	struct s_tripdata
+{
+	float distance;
+	float distancepp;
+	float wallstripheight;
+}				t_rip_data;
+
 void			*g_mlx_ptr;
 void			*g_win_ptr;
 int				g_num_rays;
@@ -162,8 +169,9 @@ t_cast_data		g_ray;
 t_player		g_player;
 t_game_data		g_game_data;
 t_img_data		g_img;
+t_rip_data		g_strip;
 int				g_ray_distance[5120];
-int				*g_textures[5];
+unsigned int	*g_textures[5];
 
 void			drawsquare(int x,int y ,int color);
 void			mlx_img_mod(int x, int y, int color);

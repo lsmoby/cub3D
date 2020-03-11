@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 15:41:07 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/03/10 15:13:27 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/03/10 20:30:34 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int		store_map(char ***line)
 	while (i < g_game_data.map.columns)
 		g_game_data.map.map[i++] = ' ';
 	g_game_data.map.map[i] = '\0';
-	printf("%s", g_game_data.map.map);
+	// printf("%s", g_game_data.map.map);
 	while (**line && (***line == '1' || ***line == ' ' || ***line == '0'))
 	{
 		i = 0;
@@ -114,7 +114,7 @@ int		store_map(char ***line)
 		while (i < g_game_data.map.columns)
 			(tmp[i] = ' ') && i++;
 		tmp[g_game_data.map.columns] = '\0';
-		printf("%s", tmp);
+		// printf("%s", tmp);
 		fre = g_game_data.map.map;
 		g_game_data.map.map = ft_strjoin(g_game_data.map.map, tmp);
 		free(fre);
@@ -128,7 +128,7 @@ int		store_map(char ***line)
 	tmp[i] = '\0';
 	fre = g_game_data.map.map;
 	g_game_data.map.map = ft_strjoin(g_game_data.map.map, tmp);
-	printf("%s", tmp);
+	// printf("%s", tmp);
 	free(fre);
 	free(tmp);
 	i = 0;
