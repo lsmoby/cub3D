@@ -129,16 +129,7 @@ int		iswall(float x, float y)
 	return (0);
 }
 
-int		iswallplayer(float x, float y)
-{
-	int	xtemp;
-	int	ytemp;
 
-	xtemp = (int)((x / T_S));
-	ytemp = (int)((y / T_S));
-	return (g_game_data.map.map[xtemp +
-	(ytemp * g_game_data.map.columns)] == '1');
-}
 
 int			key_pressed(int key)
 {
@@ -451,6 +442,8 @@ int		render_frames(void)
 	g_img.img_ptr = mlx_new_image(g_mlx_ptr, g_game_data.res.width, g_game_data.res.height);
 	g_img.addr = (int *)mlx_get_data_addr(g_img.img_ptr, &g_img.bpp, &g_img.line_length, &g_img.endian);
 	render3d();
+	sp_sort_dist();
+	sprites();
 	//draw_map();
 	//put_character();
 	mlx_put_image_to_window(g_mlx_ptr, g_win_ptr, g_img.img_ptr, 0, 0);
@@ -458,24 +451,51 @@ int		render_frames(void)
 	return (0);
 }
 
-int		main(int argc, char **argv)
+void	check_args(int ac, char **av)
 {
-	if (argc < 2)
-	{
-		perror("No .cub file entered");
+	char *s;
+
+	s = ft_strrchr(av[1], '.');
+	if ((ft_strlen(s) != 4 || !ft_comp(s + 1, "cub")) &&
+		write(2, "No .cub file extension\n", 23))
 		exit(0);
-	}
-	if (set_route(read_input(argv[1])) == -1)
+	if (ac == 3)
 	{
-		perror("File error\n");
-		exit(0);
+		if ((ft_strlen(av[2]) != 6 || !ft_comp(av[2], "--save")) &&
+		write(2, "Wrong second argument\n", 22))
+			exit(0);
+		else
+		{
+			save_img();
+			exit(0);
+		}
 	}
+}
+
+void	init_game(void)
+{
 	g_num_rays = g_game_data.res.width;
 	g_mlx_ptr = mlx_init();
-	g_win_ptr = mlx_new_window(g_mlx_ptr, g_game_data.res.width, g_game_data.res.height, "cub3D");
-	g_img.img_ptr = mlx_new_image(g_mlx_ptr, g_game_data.res.width, g_game_data.res.height);
-	g_img.addr = (int *)mlx_get_data_addr(g_img.img_ptr, &g_img.bpp, &g_img.line_length, &g_img.endian);
+	g_win_ptr = mlx_new_window(g_mlx_ptr, g_game_data.res.width,
+				g_game_data.res.height, "cub3D");
+	g_img.img_ptr = mlx_new_image(g_mlx_ptr, g_game_data.res.width,
+				g_game_data.res.height);
+	g_img.addr = (int *)mlx_get_data_addr(g_img.img_ptr, &g_img.bpp,
+				&g_img.line_length, &g_img.endian);
+}
+int		main(int ac, char **av)
+{
+	if (ac < 2 && write(2, "No .cub file entered\n", 21))
+		exit(0);
+	if (ac > 3 && write(2, "Too many arguments!\n", 20))
+		exit(0);
+	check_args(ac, av);
+	if (set_route(read_input(av[1])) == -1 &&
+			write(2, "Configuration file error\n", 25))
+		exit(0);
+	init_game();
 	init_player_pos();
+	sp_pos();
 	fill_texture();
 	mlx_hook(g_win_ptr, 2, 1L<<0, key_pressed, (void *)0);
 	mlx_hook(g_win_ptr, 3, 1L<<1, key_released, (void *)0);

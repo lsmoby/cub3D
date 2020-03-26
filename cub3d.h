@@ -161,6 +161,13 @@ typedef	struct s_tripdata
 	float distancepp;
 	float wallstripheight;
 }				t_rip_data;
+typedef	struct	s_sprite
+{
+	int		*data;
+	float	x;
+	float	y;
+	float	distance;
+}				t_sprite;
 
 void			*g_mlx_ptr;
 void			*g_win_ptr;
@@ -172,7 +179,10 @@ t_img_data		g_img;
 t_rip_data		g_strip;
 int				g_ray_distance[5120];
 unsigned int	*g_textures[5];
+t_sprite		g_spr[500];
+int				g_num_spr;
 
+char			*ft_strrchr(const char *s, int c);
 void			drawsquare(int x,int y ,int color);
 void			mlx_img_mod(int x, int y, int color);
 int				get_next_line(int fd, char **line);
@@ -208,8 +218,8 @@ void			*ftft();
 void			ft_putstr(char *str);
 void			sprites(void);
 void			init_sprite(int k, int *x_s, int *y_s);
-void			render_sp(int x, int y, int sp_size, int k);
-void			update_sp_d(void);
+void			render_sp(int x, int y, int size, int i);
+void			sp_sort_dist(void);
 void			sp_pos(void);
 int				has_sp(float x, float y);
 void			grownd(int x);
@@ -221,7 +231,7 @@ void			move_y(float new_x, float new_y);
 void			set_angle(int i, int j);
 void			save(int argc, char **argv);
 void			black_img(void);
-float			dist(float x1, float x2, float y1, float y2);
+double			dis_2_points(float x1, float y1, float x2, float y2);
 void			render3d(void);
 void			check_cub(int argc, char **argv);
 char			**affect(char **tmp, char **line, char **buffer, char ***ret);
