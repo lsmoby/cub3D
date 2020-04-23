@@ -90,7 +90,8 @@ void	sprites(void)
 		x = (angle - RAD_ANGLE(g_player.rotation_angle)) *
 		g_game_data.res.width / RAD_ANGLE(FOV_ANGLE) +
 				((g_game_data.res.width / 2) - (size / 2));
-		render_sp(x, y, size, id);
+		render_sp(x, y + g_player.view, size, id);
+		printf("%d\n",g_player.view);
 	}
 }
 

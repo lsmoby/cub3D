@@ -90,14 +90,15 @@ typedef struct	s_cast_data
 
 typedef struct	s_player
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 	int		turn_direction;
 	int		walk_direction;
 	float	rotation_angle;
 	int		walk_speed;
 	int		turn_speed;
 	int		pov_direction;
+	int		view;
 }				t_player;
 
 typedef	struct	s_res

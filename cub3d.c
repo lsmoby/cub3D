@@ -33,6 +33,7 @@ void	init_player_pos(void)
 	int	j;
 
 	i = -1;
+	g_player.view = 0;
 	while (++i < g_game_data.map.rows)
 	{
 		j = -1;
@@ -131,9 +132,13 @@ int		is_sprite(float x, float y)
 
 int			key_pressed(int key)
 {
-	if (key == w_key || key == up_key)
+	if (key == w_key)
 		g_player.walk_direction = 1;
-	if (key == s_key || key == down_key)
+	if (key == up_key)
+		g_player.view += 5;
+	if (key == down_key)
+		g_player.view -= 5;
+	if (key == s_key)
 		g_player.walk_direction = -1;
 	if (key == left_key)
 		g_player.turn_direction = -1;
@@ -365,7 +370,7 @@ void	putstripe(float angle, int id)
 	g_strip.wallstripheight = (T_S / g_strip.distance) * g_strip.distancepp;
 	g_ray_distance[id] = g_ray.distance;
 	react(id, (g_game_data.res.height / 2) -
-	(g_strip.wallstripheight / 2), g_strip.wallstripheight);
+	(g_strip.wallstripheight / 2) + g_player.view, g_strip.wallstripheight);
 }
 
 void	render3d(void)
