@@ -43,7 +43,7 @@ int		check_all(char *map)
 		j = 0;
 		while (j < g_game_data.map.columns)
 		{
-			if (ft_strchr("NWES012", map[j +
+			if (ft_strchr("NWES01234", map[j +
 				(i * g_game_data.map.columns)]) == NULL)
 				return (-1);
 			j++;

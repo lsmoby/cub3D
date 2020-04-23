@@ -29,3 +29,8 @@ char	*ft_strrchr(const char *s, int c)
 	}
 	return (NULL);
 }
+
+int		rgbtoint(int r, int g, int b)
+{
+	return ((r * 256 * 256) + (g * 256) + b);
+}

@@ -62,7 +62,7 @@ int		xbrowse(void *adr)
 	tmp = g_x;
 	while (tmp && tmp->addr != (size_t)adr && (back = tmp))
 		tmp = tmp->next;
-	if (tmp && ((back->next = tmp->next) != NULL + 1))
+	if (tmp && ((back->next = tmp->next) != (void*)42))
 	{
 		free((void *)tmp->addr);
 		free(tmp);

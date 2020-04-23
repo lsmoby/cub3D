@@ -91,3 +91,22 @@ float	normalizeangle(float angle)
 		angle =  (2 * M_PI) + angle;
 	return angle;
 }
+
+void	draw_line1(int x0, int y0, int x1, int y1, int color)
+{
+    int dx = x1 - x0;
+    int dy = y1 - y0;
+    int i = 0;
+    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+	float xinc = dx / (float) steps;
+    float yinc = dy / (float) steps;
+    float x = x0;
+    float y = y0;
+    while (i <= steps)
+    {
+		img_update(y * g_mini ,y * g_mini, color);
+		x += xinc;
+		y += yinc;
+		i++;
+    }
+}

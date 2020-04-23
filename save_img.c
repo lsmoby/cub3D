@@ -1,8 +1,8 @@
 #include "cub3d.h"
 
-void	save_img(int argc, char **argv)
+void	save_img(void)
 {
-	update_sp_d();
+	sp_sort_dist();
 	render3d();
 	sprites();
 	screen_shot();

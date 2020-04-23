@@ -35,16 +35,18 @@
 # define RAD M_PI/180
 # define T_S 64
 # define FOV_ANGLE 60
-# define w_key 13
-# define a_key 0
-# define s_key 1
-# define d_key 2
-# define up_key 126
-# define down_key 125
-# define left_key 123
-# define right_key 124
-# define RAD_ANGLE(x) ((x * 2 * M_PI) / 360)
+# define w_key 122
+# define a_key 113
+# define s_key 115
+# define d_key 100
+# define up_key 65362
+# define down_key 65364
+# define left_key 65361
+# define right_key 65363
+# define RAD_ANGLE(x) ((x * M_PI) / 180)
+# define DEG_ANGLE(x) ((x * 180) / M_PI)
 # define g_mini 0.2
+# define number_spr 100
 
 typedef struct	s_h_ray_data
 {
@@ -164,6 +166,7 @@ typedef	struct s_tripdata
 typedef	struct	s_sprite
 {
 	int		*data;
+	void	*img;
 	float	x;
 	float	y;
 	float	distance;
@@ -179,7 +182,7 @@ t_img_data		g_img;
 t_rip_data		g_strip;
 int				g_ray_distance[5120];
 unsigned int	*g_textures[5];
-t_sprite		g_spr[500];
+t_sprite		g_spr[number_spr];
 int				g_num_spr;
 
 char			*ft_strrchr(const char *s, int c);
@@ -206,18 +209,18 @@ char			*ft_strchr(const char *s, int c);
 void			affect_distance(void);
 void			v_ray_inter(float ray_angle);
 void			h_ray_inter(float ray_angle);
-float			normalize_angle(float angle);
+float			normalise_angle(float angle);
 void			screen_shot();
 int				ft_strcmp(char *s1, char *s2);
 void			set_h(void);
 void			set(int flag, int i);
-void			set_v(void);
 void			xflush(void);
 void			*xexit(int x);
 void			*ftft();
 void			ft_putstr(char *str);
 void			sprites(void);
-void			init_sprite(int k, int *x_s, int *y_s);
+void			init_sprite(int i, char type);
+int				is_sprite(float x, float y);
 void			render_sp(int x, int y, int size, int i);
 void			sp_sort_dist(void);
 void			sp_pos(void);
@@ -291,4 +294,5 @@ int     		rgbtoint(int r, int g, int b);
 void			draw_map();
 void			cast_2d_rays();
 void			putstripe(float angle, int j);
+void			save_img();
 #endif

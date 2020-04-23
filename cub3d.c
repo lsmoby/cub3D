@@ -70,25 +70,6 @@ void	init_player_pos(void)
 	}
 }
 
-void	draw_line1(int x0, int y0, int x1, int y1, int color)
-{
-    int dx = x1 - x0;
-    int dy = y1 - y0;
-    int i = 0;
-    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-	float xinc = dx / (float) steps;
-    float yinc = dy / (float) steps;
-    float x = x0;
-    float y = y0;
-    while (i <= steps)
-    {
-		img_update(y * g_mini ,y * g_mini, color);
-		x += xinc;
-		y += yinc;
-		i++;
-    }
-}
-
 void	put_character(void)
 {
 	float	phi;
@@ -129,13 +110,30 @@ int		iswall(float x, float y)
 	return (0);
 }
 
+int		is_sprite(float x, float y)
+{
+	int	xtemp;
+	int	ytemp;
+
+	xtemp = (int)floor(x / T_S);
+	ytemp = (int)floor(y / T_S);
+	if (xtemp <= g_game_data.map.columns && xtemp >= 0
+		&& ytemp <= g_game_data.map.rows && ytemp >= 0)
+		return (g_game_data.map.map[xtemp +
+		(ytemp * g_game_data.map.columns)] == '2' ||
+		g_game_data.map.map[xtemp + (ytemp *
+		g_game_data.map.columns)] == '3' ||
+		g_game_data.map.map[xtemp + (ytemp *
+		g_game_data.map.columns)] == '4');
+	return (0);
+}
 
 
 int			key_pressed(int key)
 {
-	if (key == w_key)
+	if (key == w_key || key == up_key)
 		g_player.walk_direction = 1;
-	if (key == s_key)
+	if (key == s_key || key == down_key)
 		g_player.walk_direction = -1;
 	if (key == left_key)
 		g_player.turn_direction = -1;
@@ -163,9 +161,7 @@ void		black_img(void)
 {
 	int		i;
 	int		j;
-	int		val;
 
-	val = RAD;
 	i = 0;
 	while (i < g_game_data.res.width)
 	{
@@ -326,9 +322,6 @@ void	fill_texture(void)
 	tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.we, &a, &b);
 	g_textures[3] =
 	(unsigned int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
-	tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.s, &a, &b);
-	g_textures[4] =
-	(unsigned int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
 }
 
 void	react(float x, float top_pixel, float wallstripheight)
@@ -339,11 +332,10 @@ void	react(float x, float top_pixel, float wallstripheight)
 
 	y = 0;
 	while (y < top_pixel && (y < g_game_data.res.width))
-		img_update(x, y++, 0x0d3842);
-
+		img_update(x, y++, rgbtoint(g_game_data.c.r,
+			g_game_data.c.g, g_game_data.c.b));
 	xoffset = (g_ray.washitvertical) ? ((int)g_ray.wallhity % T_S) :
 		((int)g_ray.wallhitx % T_S);
-	printf("%d | %d\n",g_ray.wallhity, g_ray.wallhitx);
 	while (y < top_pixel + wallstripheight && y < g_game_data.res.width)
 	{
 		yoffset = (y - top_pixel) * ((float)T_S / wallstripheight);
@@ -360,7 +352,8 @@ void	react(float x, float top_pixel, float wallstripheight)
 		y++;
 	}
 	while (y >= 0 && (y < g_game_data.res.width))
-		img_update(x, y++, 0xb07e59);
+		img_update(x, y++, rgbtoint(g_game_data.f.r,
+			g_game_data.f.g, g_game_data.f.b));
 }
 
 void	putstripe(float angle, int id)
@@ -400,7 +393,8 @@ int		render_frames(void)
 	new_y = sin(g_player.rotation_angle * RAD) * 8;
 	if (g_player.walk_direction == 1)
 	{
-		if (!iswall(g_player.x + new_x * 5, g_player.y + new_y * 5))
+		if (!iswall(g_player.x + new_x * 4, g_player.y + new_y * 4) &&
+		!is_sprite(g_player.x + new_x * 4, g_player.y + new_y * 4))
 		{
 			g_player.x += new_x;
 			g_player.y += new_y;
@@ -408,7 +402,8 @@ int		render_frames(void)
 	}
 	else if (g_player.walk_direction == -1)
 	{
-		if (!iswall(g_player.x - new_x * 5, g_player.y - new_y * 5))
+		if (!iswall(g_player.x - new_x * 4, g_player.y - new_y * 4) &&
+		!is_sprite(g_player.x - new_x * 4, g_player.y - new_y * 4))
 		{
 			g_player.x -= new_x;
 			g_player.y -= new_y;
@@ -422,7 +417,8 @@ int		render_frames(void)
 	{
 		new_x = cos((g_player.rotation_angle + 90) * RAD) * 8;
 		new_y = sin((g_player.rotation_angle + 90) * RAD) * 8;
-		if (!iswall(g_player.x + new_x * 2, g_player.y + new_y * 2))
+		if (!iswall(g_player.x + new_x * 2, g_player.y + new_y * 2) &&
+		!is_sprite(g_player.x + new_x * 2, g_player.y + new_y * 2))
 		{
 			g_player.x += new_x;
 			g_player.y += new_y;
@@ -432,7 +428,8 @@ int		render_frames(void)
 	{
 		new_x = cos((g_player.rotation_angle + 90) * RAD) * 8;
 		new_y = sin((g_player.rotation_angle + 90) * RAD) * 8;
-		if (!iswall(g_player.x - new_x * 2, g_player.y - new_y * 2))
+		if (!iswall(g_player.x - new_x * 2, g_player.y - new_y * 2) &&
+		!is_sprite(g_player.x - new_x * 2, g_player.y - new_y * 2))
 		{
 			g_player.x -= new_x;
 			g_player.y -= new_y;

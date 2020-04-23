@@ -103,7 +103,6 @@ int		store_map(char ***line)
 	while (i < g_game_data.map.columns)
 		g_game_data.map.map[i++] = ' ';
 	g_game_data.map.map[i] = '\0';
-	// printf("%s", g_game_data.map.map);
 	while (**line && (***line == '1' || ***line == ' ' || ***line == '0'))
 	{
 		i = 0;

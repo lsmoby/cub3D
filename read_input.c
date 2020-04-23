@@ -29,14 +29,13 @@ int		map_check(void)
 		j = 1;
 		while (j < g_game_data.map.columns - 1)
 		{
-			// printf("%c\n", map[j + (i * g_game_data.map.columns)]);
 			if (ft_strchr("NSWE",
 			map[j + (i * g_game_data.map.columns)]))
 				p++;
-			if (!ft_strchr(" 012NSEW",
+			if (!ft_strchr(" 01234NSEW",
 			map[j + (i * g_game_data.map.columns)]))
 				return (-1);
-			if (ft_strchr("02NSEW", map[j + (i * g_game_data.map.columns)]))
+			if (ft_strchr("0234NSEW", map[j + (i * g_game_data.map.columns)]))
 			{
 				if (map[j + 1 + (i * g_game_data.map.columns)] == ' ' ||
 				map[j - 1 + (i * g_game_data.map.columns)] == ' ' ||
