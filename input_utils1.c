@@ -12,8 +12,10 @@
 
 #include "cub3d.h"
 
-char	**affect(char **tmp, char **line, char **buffer, char ***ret)
+char	**affect(char **tmp, char **line, char **buffer)
 {
+	char	**ret;
+
 	*tmp = *buffer;
 	*buffer = ft_strjoin(*buffer, *line);
 	free(*line);
@@ -21,9 +23,9 @@ char	**affect(char **tmp, char **line, char **buffer, char ***ret)
 	*tmp = *buffer;
 	*buffer = ft_strjoin(*buffer, "\n");
 	free(*tmp);
-	*ret = ft_split(*buffer, '\n');
+	ret = ft_split(*buffer, '\n');
 	free(*buffer);
-	return (*ret);
+	return (ret);
 }
 
 int		map_check2(char *buffer)
@@ -54,7 +56,6 @@ char	**read_input(char *file)
 	char	*line;
 	char	*buffer;
 	char	*tmp;
-	char	**ret;
 
 	buffer = ft_strdup("");
 	fd1 = open(file, O_RDONLY);
@@ -70,7 +71,7 @@ char	**read_input(char *file)
 	}
 	if (map_check2(buffer) == -1)
 		return (NULL);
-	return (affect(&tmp, &line, &buffer, &ret));
+	return (affect(&tmp, &line, &buffer));
 }
 
 void	skip_digits(char **line)

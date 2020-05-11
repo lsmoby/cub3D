@@ -57,12 +57,12 @@ static int				d_job(char const *str, char c, int j, char **ret)
 
 	while (c_words(str, c))
 	{
-		while (*str == c || *str == '\0')
+		while (*str && *str == c)
 			str++;
 		if (str)
 		{
 			k = 0;
-			if (!(ret[j] = (char*)malloc(sizeof(char) * (l(str, 0, c) + 1))))
+			if (!(ret[j] = (char*)MALLOC(sizeof(char) * (l(str, 0, c) + 1))))
 			{
 				while (j)
 					free(ret[--j]);

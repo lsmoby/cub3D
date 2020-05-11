@@ -83,6 +83,7 @@ int		set_route(char **lines)
 {
 	if (!lines)
 		return (-1);
+	g_fre = lines;
 	while (lines)
 	{
 		if (process_input(lines) == -1)
@@ -99,23 +100,25 @@ int		set_route(char **lines)
 		return (-1);
 	if (map_check() == -1)
 		return (-1);
-	xflush();
 	return (1);
 }
-
-// int main ()
-// {
-// 		set_route(read_input("map.cub"));
-// 	// int i = 0, j = 0;
-// 	// while (i <= g_game_data.map.rows)
-// 	// {
-// 	// 	j = 0;
-// 	// 	while (j <= g_game_data.map.columns)
-// 	// 	{
-// 	// 		printf("%c", g_game_data.map.map[j + (i * g_game_data.map.columns)]);
-// 	// 		j++;
-// 	// 	}
-// 	// 	printf("%c", '\n');
-// 	// 	i++;
-// 	// }
-// }
+/*
+ int main ()
+ {
+ 		set_route(read_input("map.cub"));
+ 	 int i = 0, j = 0;
+ 	 while (i <= g_game_data.map.rows)
+ 	 {
+ 	 	j = 0;
+ 	 	while (j <= g_game_data.map.columns)
+ 	 	{
+ 	 		printf("%c", g_game_data.map.map[j + (i * g_game_data.map.columns)]);
+ 	 		j++;
+ 	 	}
+ 	 	printf("%c", '\n');
+ 	 	i++;
+	}
+	free(g_fre);
+	return (0);
+ }
+*/

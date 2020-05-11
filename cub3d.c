@@ -17,7 +17,8 @@ int		destroy_window(void)
 {
 	mlx_destroy_image(g_mlx_ptr, g_img.img_ptr);
 	mlx_destroy_window(g_mlx_ptr, g_win_ptr);
-	exit(0);
+	byebye();
+	return(0);
 }
 
 float	normalise_angle(float angle)
@@ -71,32 +72,6 @@ void	init_player_pos(void)
 	}
 }
 
-void	put_character(void)
-{
-	float	phi;
-	float	val;
-	int		r;
-	float	x;
-	float	y;
-
-	val = RAD;
-	r = 4;
-	while (r >= 0)
-	{
-		phi = 0;
-		while (phi <= 360)
-		{
-			y = (g_player.y) + (r * sin(phi * val));
-			x = (g_player.x) + (r * cos(phi * val));
-			if (x >= 0 && x < g_game_data.res.width &&
-			y >= 0 && y < g_game_data.res.height)
-				img_update(x * g_mini, y * g_mini, 0xff0000);
-			phi += 0.1;
-		}
-		r--;
-	}
-}
-
 int		iswall(float x, float y)
 {
 	int	xtemp;
@@ -134,10 +109,10 @@ int			key_pressed(int key)
 {
 	if (key == w_key)
 		g_player.walk_direction = 1;
-	if (key == up_key)
-		g_player.view += 5;
-	if (key == down_key)
-		g_player.view -= 5;
+	if (key == up_key && g_player.view < g_game_data.res.height/4)
+		g_player.view += g_game_data.res.height/40;
+	if (key == down_key && g_player.view > -g_game_data.res.height/4)
+		g_player.view -= g_game_data.res.height/40;
 	if (key == s_key)
 		g_player.walk_direction = -1;
 	if (key == left_key)
@@ -318,15 +293,28 @@ void	fill_texture(void)
 	tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.no, &a, &b);
 	g_textures[0] =
 	(unsigned int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
+	free(tmp);
 	tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.so, &a, &b);
 	g_textures[1] =
 	(unsigned int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
+	free(tmp);
 	tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.ea, &a, &b);
 	g_textures[2] =
 	(unsigned int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
+	free(tmp);
 	tmp = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.we, &a, &b);
 	g_textures[3] =
 	(unsigned int*)mlx_get_data_addr(tmp, &useless, &useless, &useless);
+	free(tmp);
+}
+
+void	free_texture(void)
+{
+	int i;
+
+	i = 0;
+	while (i < 4)
+		free(g_textures[i]);
 }
 
 void	react(float x, float top_pixel, float wallstripheight)
@@ -394,8 +382,9 @@ int		render_frames(void)
 	float new_x;
 	float new_y;
 
-	new_x = cos(g_player.rotation_angle * RAD) * 8;
-	new_y = sin(g_player.rotation_angle * RAD) * 8;
+	g_speed = g_game_data.res.width / (g_game_data.res.width / 12);
+	new_x = cos(g_player.rotation_angle * RAD) * g_speed;
+	new_y = sin(g_player.rotation_angle * RAD) * g_speed;
 	if (g_player.walk_direction == 1)
 	{
 		if (!iswall(g_player.x + new_x * 4, g_player.y + new_y * 4) &&
@@ -420,8 +409,8 @@ int		render_frames(void)
 		g_player.rotation_angle -= 2;
 	if (g_player.pov_direction == 1)
 	{
-		new_x = cos((g_player.rotation_angle + 90) * RAD) * 8;
-		new_y = sin((g_player.rotation_angle + 90) * RAD) * 8;
+		new_x = cos((g_player.rotation_angle + 90) * RAD) * g_speed;
+		new_y = sin((g_player.rotation_angle + 90) * RAD) * g_speed;
 		if (!iswall(g_player.x + new_x * 2, g_player.y + new_y * 2) &&
 		!is_sprite(g_player.x + new_x * 2, g_player.y + new_y * 2))
 		{
@@ -431,8 +420,8 @@ int		render_frames(void)
 	}
 	else if (g_player.pov_direction == -1)
 	{
-		new_x = cos((g_player.rotation_angle + 90) * RAD) * 8;
-		new_y = sin((g_player.rotation_angle + 90) * RAD) * 8;
+		new_x = cos((g_player.rotation_angle + 90) * RAD) * g_speed;
+		new_y = sin((g_player.rotation_angle + 90) * RAD) * g_speed;
 		if (!iswall(g_player.x - new_x * 2, g_player.y - new_y * 2) &&
 		!is_sprite(g_player.x - new_x * 2, g_player.y - new_y * 2))
 		{
@@ -485,6 +474,14 @@ void	init_game(void)
 	g_img.addr = (int *)mlx_get_data_addr(g_img.img_ptr, &g_img.bpp,
 				&g_img.line_length, &g_img.endian);
 }
+
+void byebye()
+{
+	if (g_fre)
+		free(g_fre);
+	xflush();
+	exit(0);
+}
 int		main(int ac, char **av)
 {
 	if (ac < 2 && write(2, "No .cub file entered\n", 21))
@@ -494,7 +491,7 @@ int		main(int ac, char **av)
 	check_args(ac, av);
 	if (set_route(read_input(av[1])) == -1 &&
 			write(2, "Configuration file error\n", 25))
-		exit(0);
+		byebye();
 	init_game();
 	init_player_pos();
 	sp_pos();

@@ -185,6 +185,8 @@ int				g_ray_distance[5120];
 unsigned int	*g_textures[5];
 t_sprite		g_spr[number_spr];
 int				g_num_spr;
+int				g_speed;
+char			**g_fre;
 
 char			*ft_strrchr(const char *s, int c);
 void			drawsquare(int x,int y ,int color);
@@ -238,7 +240,7 @@ void			black_img(void);
 double			dis_2_points(float x1, float y1, float x2, float y2);
 void			render3d(void);
 void			check_cub(int argc, char **argv);
-char			**affect(char **tmp, char **line, char **buffer, char ***ret);
+char			**affect(char **tmp, char **line, char **buffer);
 int				map_check2(char *buffer);
 char			*skip_blanks(char *str);
 void			skip_digits(char **line);
@@ -296,4 +298,7 @@ void			draw_map();
 void			cast_2d_rays();
 void			putstripe(float angle, int j);
 void			save_img();
+void			byebye();
+void			free_texture();
+void			free_sprite();
 #endif

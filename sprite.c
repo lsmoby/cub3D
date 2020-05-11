@@ -66,6 +66,16 @@ void	init_sprite(int i, char type)
 	g_spr[i].data = (int *)mlx_get_data_addr(g_spr[i].img, &a, &a, &a);
 }
 
+void	free_sprite(void)
+{
+	while (g_num_spr >= 0)
+	{
+		free(g_spr[g_num_spr].img);
+		free(g_spr[g_num_spr].data);
+		g_num_spr--;
+	}
+}
+
 void	sprites(void)
 {
 	float	angle;
@@ -91,7 +101,6 @@ void	sprites(void)
 		g_game_data.res.width / RAD_ANGLE(FOV_ANGLE) +
 				((g_game_data.res.width / 2) - (size / 2));
 		render_sp(x, y + g_player.view, size, id);
-		printf("%d\n",g_player.view);
 	}
 }
 

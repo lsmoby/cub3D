@@ -24,6 +24,32 @@ void draw_line(int X0, int Y0, int X1, int Y1, int color)
     }
 }
 
+void	put_character(void)
+{
+	float	phi;
+	float	val;
+	int		r;
+	float	x;
+	float	y;
+
+	val = RAD;
+	r = 4;
+	while (r >= 0)
+	{
+		phi = 0;
+		while (phi <= 360)
+		{
+			y = (g_player.y) + (r * sin(phi * val));
+			x = (g_player.x) + (r * cos(phi * val));
+			if (x >= 0 && x < g_game_data.res.width &&
+			y >= 0 && y < g_game_data.res.height)
+				img_update(x * g_mini, y * g_mini, 0xff0000);
+			phi += 0.1;
+		}
+		r--;
+	}
+}
+
 void	drawemptysquare(int x,int y,int color)
 {
 	int i = 0;

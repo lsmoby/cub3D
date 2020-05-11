@@ -1,1 +1,1 @@
-clang -Wall -Wextra -Werror -I /usr/local/include *.c */*.c -g3 -fsanitize=address cub3d.h -L/usr/X11/lib /usr/X11/lib/libmlx.a -lXext -lX11 -lbsd -lm && ./a.out map.cub
+rm a.out && make fclean  && make all && ./a.out map.cub
