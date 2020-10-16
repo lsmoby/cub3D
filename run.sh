@@ -1,1 +1,1 @@
-rm a.out && make fclean  && make all && ./a.out map.cub
+make re && ./cub3D map.cub

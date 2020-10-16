@@ -17,14 +17,13 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdlib.h>
-# include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
 # include <unistd.h>
-# include <stdio.h>
 # include "tools/get_next_line.h"
 # include <math.h>
 # include <stdio.h>
+# include <time.h>
 # include "tools/xmalloc.h"
 
 # define MALLOC xmalloc
@@ -187,6 +186,10 @@ t_sprite		g_spr[number_spr];
 int				g_num_spr;
 int				g_speed;
 char			**g_fre;
+double			g_start_time;
+int				g_type;
+int				g_spr_id;
+int				g_argc;
 
 char			*ft_strrchr(const char *s, int c);
 void			drawsquare(int x,int y ,int color);
@@ -213,13 +216,12 @@ void			affect_distance(void);
 void			v_ray_inter(float ray_angle);
 void			h_ray_inter(float ray_angle);
 float			normalise_angle(float angle);
-void			screen_shot();
 int				ft_strcmp(char *s1, char *s2);
 void			set_h(void);
 void			set(int flag, int i);
 void			xflush(void);
 void			*xexit(int x);
-void			*ftft();
+void			*ftft(void);
 void			ft_putstr(char *str);
 void			sprites(void);
 void			init_sprite(int i, char type);
@@ -229,7 +231,6 @@ void			sp_sort_dist(void);
 void			sp_pos(void);
 int				has_sp(float x, float y);
 void			grownd(int x);
-void			wall(int x);
 void			ceiling(int x);
 void			init_stripe(float ray_angle, int k);
 void			move_x(float new_x, float new_y);
@@ -286,7 +287,7 @@ void			*ft_calloc(size_t n, size_t size);
 char			*ft_strtrim(char const *s1, char const *set);
 void			cast_ray(float angle);
 int				iswall(float x, float y);
-int				render_frames();
+int				render_frames(void);
 int				destroy_window(void);
 int				key_pressed(int key);
 int				key_released(int key);
@@ -294,11 +295,14 @@ void			init_player_pos(void);
 int				set_route(char **lines);
 char			**read_input(char *file);
 int     		rgbtoint(int r, int g, int b);
-void			draw_map();
-void			cast_2d_rays();
+void			draw_map(void);
+void			cast_2d_rays(void);
 void			putstripe(float angle, int j);
-void			save_img();
-void			byebye();
-void			free_texture();
-void			free_sprite();
+void			save_img(void);
+void			byebye(void);
+void			free_texture(void);
+int				fill_texture(void);
+void			free_sprite(void);
+void			play_music(void);
+void			init_game(void);
 #endif

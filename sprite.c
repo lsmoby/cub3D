@@ -18,7 +18,7 @@ void	sp_pos(void)
 	int j;
 
 	i = -1;
-	g_num_spr = 0;
+	ft_bzero(&g_spr, sizeof(g_spr));
 	while ((++i < g_game_data.map.rows) && (j = -1))
 		while (++j < g_game_data.map.columns && g_num_spr < number_spr)
 			if (g_game_data.map.map[j + (i * g_game_data.map.columns)] == '2' ||
@@ -61,7 +61,7 @@ void	init_sprite(int i, char type)
 		g_spr[i].img = mlx_xpm_file_to_image(g_mlx_ptr, "./textures/mushroom.xpm", &a, &a);
 	else if (type == '4')
 		g_spr[i].img = mlx_xpm_file_to_image(g_mlx_ptr, "./textures/daisy.xpm", &a, &a);
-	if (!g_spr[i].img && write(1,"sprite error", 12))
+	if (!g_spr[i].img && write(2,"sprite error", 12))
 		exit(0);
 	g_spr[i].data = (int *)mlx_get_data_addr(g_spr[i].img, &a, &a, &a);
 }
@@ -93,9 +93,9 @@ void	sprites(void)
 		while (angle - (g_player.rotation_angle * RAD) < -M_PI)
 			angle += 2 * M_PI;
 		if (g_game_data.res.height < g_game_data.res.width)
-			size = g_game_data.res.height / g_spr[id].distance * T_S;
+			size = (g_game_data.res.height / g_spr[id].distance) * T_S;
 		else
-			size = g_game_data.res.width / g_spr[id].distance * T_S;		
+			size = (g_game_data.res.width / g_spr[id].distance) * T_S;		
 		y = (g_game_data.res.height / 2) - (size / 2);
 		x = (angle - RAD_ANGLE(g_player.rotation_angle)) *
 		g_game_data.res.width / RAD_ANGLE(FOV_ANGLE) +
@@ -111,16 +111,13 @@ void	render_sp(int x, int y, int size, int id)
 	int color;
 
 	i = -1;
+	(g_type = 3) && (g_spr_id = id);
 	while (++i < size)
 	{
 		if ((x + i < 0) || (x + i > g_game_data.res.width))
-		{
 			continue;
-		}
 		if (g_spr[id].distance >= g_ray_distance[x + i])
-		{
 			continue;
-		}
 		j = -1;
 		while (++j < size)
 		{
