@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 15:40:45 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/03/04 20:20:02 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/10/22 02:47:36 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ int		store_resolution(char **line)
 	*line = skip_blanks(*line);
 	if (!ft_strchr("\n \t\0", **line))
 		return (-1);
-	else
-		(line)++;
+	(line)++;
 	return (1);
 }
 

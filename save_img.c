@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   save_img.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/22 02:48:11 by ael-ghem          #+#    #+#             */
+/*   Updated: 2020/10/22 02:48:25 by ael-ghem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static	int		write_header(int fd)
@@ -59,7 +71,7 @@ static	void	screen_shot(void)
 	close(fd);
 }
 
-void	save_img(void)
+void			save_img(void)
 {
 	render_frames();
 	screen_shot();

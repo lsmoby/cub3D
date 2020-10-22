@@ -6,15 +6,11 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 15:41:53 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/03/02 15:42:04 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/10/20 00:16:28 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-void    xflush(void);
+#include "../cub3d.h"
 
 extern void		*g_rtn;
 

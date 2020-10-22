@@ -3,43 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   sprite.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 16:45:18 by marvin            #+#    #+#             */
-/*   Updated: 2020/03/26 16:45:18 by marvin           ###   ########.fr       */
+/*   Updated: 2020/10/22 03:58:30 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	sp_pos(void)
+void	sp_sort_dist(void)
 {
-	int i;
-	int j;
-
-	i = -1;
-	ft_bzero(&g_spr, sizeof(g_spr));
-	while ((++i < g_game_data.map.rows) && (j = -1))
-		while (++j < g_game_data.map.columns && g_num_spr < number_spr)
-			if (g_game_data.map.map[j + (i * g_game_data.map.columns)] == '2' ||
-			g_game_data.map.map[j + (i * g_game_data.map.columns)] == '3' ||
-			g_game_data.map.map[j + (i * g_game_data.map.columns)] == '4')
-			{
-				g_spr[g_num_spr].x = j * T_S + T_S / 2;
-				g_spr[g_num_spr].y = i * T_S + T_S / 2;
-				init_sprite(g_num_spr++, g_game_data.map.map[j + (i * g_game_data.map.columns)]);
-			}
-}
-
-void    sp_sort_dist(void)
-{
-	int	i;
-	int	j;
-	t_sprite tmp;
+	int			i;
+	int			j;
+	t_sprite	tmp;
 
 	i = -1;
 	while (++i < g_num_spr)
-		g_spr[i].distance = dis_2_points(g_player.x, g_player.y, g_spr[i].x, g_spr[i].y);
+		g_spr[i].distance = dis_2_points(g_player.x,
+			g_player.y, g_spr[i].x, g_spr[i].y);
 	i = -1;
 	while ((++i < g_num_spr) && (j = -1))
 		while (++j < g_num_spr - i)
@@ -49,31 +31,6 @@ void    sp_sort_dist(void)
 				g_spr[j] = g_spr[j + 1];
 				g_spr[j + 1] = tmp;
 			}
-}
-
-void	init_sprite(int i, char type)
-{
-	int		a;
-
-	if (type == '2')
-		g_spr[i].img = mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.s, &a, &a);
-	else if (type == '3')
-		g_spr[i].img = mlx_xpm_file_to_image(g_mlx_ptr, "./textures/mushroom.xpm", &a, &a);
-	else if (type == '4')
-		g_spr[i].img = mlx_xpm_file_to_image(g_mlx_ptr, "./textures/daisy.xpm", &a, &a);
-	if (!g_spr[i].img && write(2,"sprite error", 12))
-		exit(0);
-	g_spr[i].data = (int *)mlx_get_data_addr(g_spr[i].img, &a, &a, &a);
-}
-
-void	free_sprite(void)
-{
-	while (g_num_spr >= 0)
-	{
-		free(g_spr[g_num_spr].img);
-		free(g_spr[g_num_spr].data);
-		g_num_spr--;
-	}
 }
 
 void	sprites(void)
@@ -95,7 +52,7 @@ void	sprites(void)
 		if (g_game_data.res.height < g_game_data.res.width)
 			size = (g_game_data.res.height / g_spr[id].distance) * T_S;
 		else
-			size = (g_game_data.res.width / g_spr[id].distance) * T_S;		
+			size = (g_game_data.res.width / g_spr[id].distance) * T_S;
 		y = (g_game_data.res.height / 2) - (size / 2);
 		x = (angle - RAD_ANGLE(g_player.rotation_angle)) *
 		g_game_data.res.width / RAD_ANGLE(FOV_ANGLE) +
@@ -111,7 +68,8 @@ void	render_sp(int x, int y, int size, int id)
 	int color;
 
 	i = -1;
-	(g_type = 3) && (g_spr_id = id);
+	g_type = 3;
+	g_spr_id = id;
 	while (++i < size)
 	{
 		if ((x + i < 0) || (x + i > g_game_data.res.width))

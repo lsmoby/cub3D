@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 15:58:42 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/03/11 18:27:25 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/10/22 05:10:38 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,24 @@
 # include <stdio.h>
 # include <time.h>
 # include "tools/xmalloc.h"
-
 # define MALLOC xmalloc
 # define FREE xfree
 # define FLUSH xflush
 # define EXIT xexit
-
 # define RAD M_PI/180
 # define T_S 64
 # define FOV_ANGLE 60
-# define w_key 122
-# define a_key 113
-# define s_key 115
-# define d_key 100
-# define up_key 65362
-# define down_key 65364
-# define left_key 65361
-# define right_key 65363
+# define W_KEY 13
+# define A_KEY 0
+# define S_KEY 1
+# define D_KEY 2
+# define UP_KEY 126
+# define DOWN_KEY 125
+# define LEFT_KEY 123
+# define RIGHT_KEY 124
 # define RAD_ANGLE(x) ((x * M_PI) / 180)
 # define DEG_ANGLE(x) ((x * 180) / M_PI)
-# define g_mini 0.2
-# define number_spr 100
+# define NBR_SPR 10000
 
 typedef struct	s_h_ray_data
 {
@@ -61,7 +58,7 @@ typedef struct	s_v_ray_data
 {
 	int		foundvertwallhit;
 	float	vertwallhitx;
-	float 	vertwallhity;
+	float	vertwallhity;
 	float	nextverttouchx;
 	float	nextverttouchy;
 	double	verthitdistance;
@@ -113,13 +110,15 @@ typedef	struct	s_paths
 	char *we;
 	char *ea;
 	char *s;
+	char *s1;
+	char *s2;
 }				t_paths;
 
-typedef struct	s_map
+typedef	struct	s_map
 {
-	int rows;
-	int	columns;
-	char *map;
+	int		rows;
+	int		columns;
+	char	*map;
 }				t_map;
 
 typedef	struct	s_color
@@ -157,7 +156,7 @@ typedef struct	s_img_data
 	int			line_length;
 	int			endian;
 }				t_img_data;
-typedef	struct s_tripdata
+typedef	struct	s_tripdata
 {
 	float distance;
 	float distancepp;
@@ -182,7 +181,7 @@ t_img_data		g_img;
 t_rip_data		g_strip;
 int				g_ray_distance[5120];
 unsigned int	*g_textures[5];
-t_sprite		g_spr[number_spr];
+t_sprite		g_spr[NBR_SPR];
 int				g_num_spr;
 int				g_speed;
 char			**g_fre;
@@ -192,7 +191,6 @@ int				g_spr_id;
 int				g_argc;
 
 char			*ft_strrchr(const char *s, int c);
-void			drawsquare(int x,int y ,int color);
 void			mlx_img_mod(int x, int y, int color);
 int				get_next_line(int fd, char **line);
 size_t			ft_strlen(const char *str);
@@ -259,6 +257,8 @@ char			*skip_blanks(char *str);
 int				store_map(char ***line);
 int				map_size(char **line);
 int				store_s(char *line);
+int				store_s1(char *line);
+int				store_s2(char *line);
 int				store_c(char **line);
 int				fill_c(char **line);
 void			check_p(char *map, int *p);
@@ -294,8 +294,7 @@ int				key_released(int key);
 void			init_player_pos(void);
 int				set_route(char **lines);
 char			**read_input(char *file);
-int     		rgbtoint(int r, int g, int b);
-void			draw_map(void);
+int				rgbtoint(int r, int g, int b);
 void			cast_2d_rays(void);
 void			putstripe(float angle, int j);
 void			save_img(void);
@@ -305,4 +304,18 @@ int				fill_texture(void);
 void			free_sprite(void);
 void			play_music(void);
 void			init_game(void);
+void			check_args(int ac, char **av);
+int				check_stuff(char *map, int i, int j, int *p);
+void			h_ray_wall_check(void);
+void			h_ray(float angle);
+void			v_ray_wall_check(void);
+void			v_ray(float angle);
+void			cast_ray(float angle);
+void			react(float x, float top_pixel, float wallstripheight);
+void			move_up(void);
+void			move_down(void);
+void			move_right(void);
+void			move_left(void);
+void			new_frame(void);
+
 #endif

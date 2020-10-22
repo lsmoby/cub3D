@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 15:41:07 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/03/10 20:30:34 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/10/22 05:29:44 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,76 +71,18 @@ int		store_s(char *line)
 	return (1);
 }
 
-int		map_size(char **line)
+int		store_s1(char *line)
 {
-	char	**save;
-	int		i;
-
-	save = line;
-	g_game_data.map.columns = 0;
-	g_game_data.map.rows = 1;
-	i = 0;
-	while (*save)
-	{
-		i = ft_strlen(*save);
-		(i > g_game_data.map.columns) ? g_game_data.map.columns = i : 0;
-		g_game_data.map.rows++;
-		save++;
-	}
-	g_game_data.map.columns += 2;
+	line = skip_blanks(line);
+	if (!(g_game_data.paths.s1 = ft_strtrim(line, " \t")))
+		return (-1);
 	return (1);
 }
 
-int		store_map(char ***line)
+int		store_s2(char *line)
 {
-	char	*tmp;
-	char	*fre;
-	int		i;
-	int j;
-
-	i = 0;
-	g_game_data.map.map = (char *)malloc(sizeof(char) * g_game_data.map.columns + 1);
-	while (i < g_game_data.map.columns)
-		g_game_data.map.map[i++] = ' ';
-	g_game_data.map.map[i] = '\0';
-	while (**line && (***line == '1' || ***line == ' ' || ***line == '0'))
-	{
-		i = 0;
-		tmp = (char *)malloc(sizeof(char) * g_game_data.map.columns + 1);
-		(tmp[i] = ' ') && i++;
-		while (***line)
-			(tmp[i] = ***line) && i++ && (**line)++;
-		while (i < g_game_data.map.columns)
-			(tmp[i] = ' ') && i++;
-		tmp[g_game_data.map.columns] = '\0';
-		// printf("%s", tmp);
-		fre = g_game_data.map.map;
-		g_game_data.map.map = ft_strjoin(g_game_data.map.map, tmp);
-		free(fre);
-		free(tmp);
-		(*line)++;
-	}
-	i = 0;
-	tmp = (char *)malloc(sizeof(char) * g_game_data.map.columns + 1);
-	while (i < g_game_data.map.columns)
-		tmp[i++] = ' ';
-	tmp[i] = '\0';
-	fre = g_game_data.map.map;
-	g_game_data.map.map = ft_strjoin(g_game_data.map.map, tmp);
-	// printf("%s", tmp);
-	free(fre);
-	free(tmp);
-	i = 0;
-	while (i <= g_game_data.map.rows - 1)
-	{
-		j = 0;
-		while ((j < g_game_data.map.columns))
-		{
-			if (g_game_data.map.map[j + (i * g_game_data.map.columns)] == '\0')
-				return (-1);
-			j++;
-		}
-		i++;
-	}
+	line = skip_blanks(line);
+	if (!(g_game_data.paths.s2 = ft_strtrim(line, " \t")))
+		return (-1);
 	return (1);
 }

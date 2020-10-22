@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   tools4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 18:54:28 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/02/17 22:07:11 by ael-ghem         ###   ########.fr       */
+/*   Created: 2020/10/22 03:38:07 by ael-ghem          #+#    #+#             */
+/*   Updated: 2020/10/22 05:30:06 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,24 @@ char		*ft_strtrim(char const *s, char const *set)
 		cf++;
 	}
 	return (ft_assign(cf, cd, s));
+}
+
+int			map_size(char **line)
+{
+	char	**save;
+	int		i;
+
+	save = line;
+	g_game_data.map.columns = 0;
+	g_game_data.map.rows = 1;
+	i = 0;
+	while (*save)
+	{
+		i = ft_strlen(*save);
+		(i > g_game_data.map.columns) ? g_game_data.map.columns = i : 0;
+		g_game_data.map.rows++;
+		save++;
+	}
+	g_game_data.map.columns += 2;
+	return (1);
 }

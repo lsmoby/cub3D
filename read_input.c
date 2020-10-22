@@ -6,13 +6,13 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 15:41:24 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/03/10 20:28:38 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/10/22 05:09:53 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		map_check(void)
+int				map_check(void)
 {
 	int		i;
 	int		j;
@@ -29,28 +29,8 @@ int		map_check(void)
 		j = 1;
 		while (j < g_game_data.map.columns - 1)
 		{
-			if (ft_strchr("NSWE",
-			map[j + (i * g_game_data.map.columns)]))
-				p++;
-			if (!ft_strchr(" 01234NSEW",
-			map[j + (i * g_game_data.map.columns)]))
+			if (check_stuff(map, i, j, &p))
 				return (-1);
-			if (ft_strchr("0234NSEW", map[j + (i * g_game_data.map.columns)]))
-			{
-				if (map[j + 1 + (i * g_game_data.map.columns)] == ' ' ||
-				map[j - 1 + (i * g_game_data.map.columns)] == ' ' ||
-				map[j + ((i + 1) * g_game_data.map.columns)] == ' ' ||
-				map[j + ((i - 1) * g_game_data.map.columns)] == ' ')
-					return (-1);
-			}
-			else
-			{
-				if (map[(j + 1) + ((i + 1) * g_game_data.map.columns)] == '0' ||
-				map[(j - 1) + ((i - 1) * g_game_data.map.columns)] == '0'
-				|| map[(j + 1) + ((i - 1) * g_game_data.map.columns)] == '0'
-				|| map[(j - 1) + ((i + 1) * g_game_data.map.columns)] == '0')
-					map[j + (i * g_game_data.map.columns)] = '1';
-			}
 			j++;
 		}
 		i++;
@@ -58,7 +38,7 @@ int		map_check(void)
 	return (1);
 }
 
-int		process_input(char **lines)
+int				process_input(char **lines)
 {
 	if (**lines == 'R' && ++(*lines) && store_resolution(lines) == -1)
 		return (-1);
@@ -76,10 +56,14 @@ int		process_input(char **lines)
 		return (-1);
 	if (ft_comp(*lines, "S ") && store_s((*lines) + 2) == -1)
 		return (-1);
+	if (ft_comp(*lines, "S1 ") && store_s1((*lines) + 2) == -1)
+		return (-1);
+	if (ft_comp(*lines, "S2 ") && store_s2((*lines) + 2) == -1)
+		return (-1);
 	return (1);
 }
 
-int		set_route(char **lines)
+int				set_route(char **lines)
 {
 	if (!lines)
 		return (-1);
@@ -102,23 +86,3 @@ int		set_route(char **lines)
 		return (-1);
 	return (1);
 }
-/*
- int main ()
- {
- 		set_route(read_input("map.cub"));
- 	 int i = 0, j = 0;
- 	 while (i <= g_game_data.map.rows)
- 	 {
- 	 	j = 0;
- 	 	while (j <= g_game_data.map.columns)
- 	 	{
- 	 		printf("%c", g_game_data.map.map[j + (i * g_game_data.map.columns)]);
- 	 		j++;
- 	 	}
- 	 	printf("%c", '\n');
- 	 	i++;
-	}
-	free(g_fre);
-	return (0);
- }
-*/

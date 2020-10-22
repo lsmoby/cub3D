@@ -6,37 +6,22 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 15:42:00 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/03/02 15:42:03 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/10/22 00:05:35 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "xmalloc.h"
 
-#include "../cub3d.h"
-#include <stdio.h>
-
-typedef struct		s_link
-{
-	size_t			addr;
-	struct s_link	*next;
-}					t_link;
-
-void	*xexit(int x);
-void	ft_putstr(char *str);
-void	*ftft();
-
-static	t_link	*g_x;
-void			*g_rtn;
-
-void    *xmalloc(size_t bytes)
+void				*xmalloc(size_t bytes)
 {
 	t_link	*tmp;
 
 	tmp = g_x;
-	if(!(g_rtn = malloc(bytes)))
+	if (!(g_rtn = malloc(bytes)))
 		return (NULL);
 	if (!g_x)
 	{
-		if(!(g_x = malloc(sizeof(t_link))))
+		if (!(g_x = malloc(sizeof(t_link))))
 			return (xexit(1));
 		g_x->addr = (size_t)g_rtn;
 		g_x->next = NULL;
@@ -53,12 +38,12 @@ void    *xmalloc(size_t bytes)
 	}
 	return (ftft());
 }
-	
-int		xbrowse(void *adr)
+
+int					xbrowse(void *adr)
 {
 	t_link	*tmp;
 	t_link	*back;
-	
+
 	tmp = g_x;
 	while (tmp && tmp->addr != (size_t)adr && (back = tmp))
 		tmp = tmp->next;
@@ -71,7 +56,7 @@ int		xbrowse(void *adr)
 	return (1);
 }
 
-void	xfree(void	*adr)
+void				xfree(void *adr)
 {
 	t_link	*tmp;
 
@@ -100,10 +85,10 @@ void	xfree(void	*adr)
 	}
 }
 
-void	xflush(void)
+void				xflush(void)
 {
 	t_link	*tmp;
-	
+
 	tmp = g_x;
 	free(g_rtn);
 	while (tmp)
@@ -115,7 +100,7 @@ void	xflush(void)
 	}
 }
 
-void    leakcheck(void)
+void				leakcheck(void)
 {
 	t_link *tmp;
 	size_t c;
@@ -129,10 +114,3 @@ void    leakcheck(void)
 	}
 	printf("%zu addresses unfreed.\n", c);
 }
-
-/*
-** 0: errno (system error)
-** 1:
-** 2:
-** 3:
-*/
