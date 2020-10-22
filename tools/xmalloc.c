@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 15:42:00 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/10/22 00:05:35 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/10/22 23:09:46 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,4 @@ void				leakcheck(void)
 		c++;
 		tmp = tmp->next;
 	}
-	printf("%zu addresses unfreed.\n", c);
 }

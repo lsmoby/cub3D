@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 03:18:46 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/10/22 04:18:47 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/10/22 23:09:51 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ void			react(float x, float top_pixel, float wallstripheight)
 
 	y = 0;
 	g_type = 0;
-	while (y < top_pixel && (y < g_game_data.res.width))
+	while (y < top_pixel && (y < g_game_data.res.height))
 		img_update(x, y++, rgbtoint(g_game_data.c.r,
 			g_game_data.c.g, g_game_data.c.b));
 	xoffset = (g_ray.washitvertical) ? ((int)g_ray.wallhity % T_S) :
 		((int)g_ray.wallhitx % T_S);
 	g_type = 1;
-	while (y < top_pixel + wallstripheight && y < g_game_data.res.width &&
+	while (y < top_pixel + wallstripheight && y < g_game_data.res.height &&
 		((yoffset = (y - top_pixel) * ((float)T_S / wallstripheight)) || 1))
 		if (g_ray.rayleft && g_ray.washitvertical)
 			img_update(x, y++, g_textures[0][(yoffset * T_S) + xoffset]);
@@ -82,7 +82,7 @@ void			react(float x, float top_pixel, float wallstripheight)
 			img_update(x, y++, g_textures[2][(yoffset * T_S) + xoffset]);
 		else if (g_ray.raydown && !g_ray.washitvertical)
 			img_update(x, y++, g_textures[3][(yoffset * T_S) + xoffset]);
-	while (y >= 0 && (y < g_game_data.res.width) && (g_type = 2))
+	while (y >= 0 && (y < g_game_data.res.height) && (g_type = 2))
 		img_update(x, y++, rgbtoint(g_game_data.f.r,
 			g_game_data.f.g, g_game_data.f.b));
 }

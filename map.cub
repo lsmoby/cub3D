@@ -1,4 +1,4 @@
-R 1000 700
+R 100 300
 
 NO ./textures/bricks2.xpm
 SO ./textures/faces.xpm
