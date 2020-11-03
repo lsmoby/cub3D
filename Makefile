@@ -25,7 +25,7 @@ INCS = cub3d.h	tools/get_next_line.h	 tools/xmalloc.h
 # *****************************************************************************
 
 # ********************************** FLAGS ************************************
-FLAGS = -g3 -fsanitize=address -Wall -Wextra -Werror
+FLAGS = -g  -Wall -Wextra -Werror
 MLXFLAG = -I -Lmlx -lmlx -framework OpenGL -framework AppKit -lm
 # *****************************************************************************
 

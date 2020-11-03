@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 04:27:48 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/10/22 05:12:31 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/10/26 14:25:10 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_sprite(int i, char type)
 		g_spr[i].img =
 		mlx_xpm_file_to_image(g_mlx_ptr, g_game_data.paths.s2, &a, &a);
 	if (!g_spr[i].img && write(2, "sprite error", 12))
-		exit(0);
+		byebye();
 	g_spr[i].data = (int *)mlx_get_data_addr(g_spr[i].img, &a, &a, &a);
 }
 

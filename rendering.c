@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 03:18:46 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/10/22 23:09:51 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/10/28 01:37:10 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ void			react(float x, float top_pixel, float wallstripheight)
 	while (y < top_pixel + wallstripheight && y < g_game_data.res.height &&
 		((yoffset = (y - top_pixel) * ((float)T_S / wallstripheight)) || 1))
 		if (g_ray.rayleft && g_ray.washitvertical)
-			img_update(x, y++, g_textures[0][(yoffset * T_S) + xoffset]);
-		else if (g_ray.rayright && g_ray.washitvertical)
-			img_update(x, y++, g_textures[1][(yoffset * T_S) + xoffset]);
-		else if (g_ray.rayup && !g_ray.washitvertical)
 			img_update(x, y++, g_textures[2][(yoffset * T_S) + xoffset]);
-		else if (g_ray.raydown && !g_ray.washitvertical)
+		else if (g_ray.rayright && g_ray.washitvertical)
 			img_update(x, y++, g_textures[3][(yoffset * T_S) + xoffset]);
+		else if (g_ray.rayup && !g_ray.washitvertical)
+			img_update(x, y++, g_textures[0][(yoffset * T_S) + xoffset]);
+		else if (g_ray.raydown && !g_ray.washitvertical)
+			img_update(x, y++, g_textures[1][(yoffset * T_S) + xoffset]);
 	while (y >= 0 && (y < g_game_data.res.height) && (g_type = 2))
 		img_update(x, y++, rgbtoint(g_game_data.f.r,
 			g_game_data.f.g, g_game_data.f.b));

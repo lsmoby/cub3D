@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 03:56:39 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/10/22 05:26:28 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/10/27 23:05:12 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void			check_args(int ac, char **av)
 		else
 			save_img();
 	}
-	system("afplay music/m.wav &>/dev/null &");
+	system("afplay music/Buttercup-Melody.wav &>/dev/null &");
 	g_start_time = clock();
 	g_win_ptr = mlx_new_window(g_mlx_ptr, g_game_data.res.width,
 			g_game_data.res.height, "cub3D");
@@ -54,10 +54,10 @@ void			play_music(void)
 	clock_t current_time;
 
 	current_time = clock();
-	if (((double)(current_time - g_start_time) / (double)CLOCKS_PER_SEC) >= 40)
+	if (((double)(current_time - g_start_time) / (double)CLOCKS_PER_SEC) >= 66)
 	{
 		system("killall afplay");
-		system("afplay music/m.wav &>/dev/null &");
+		system("afplay music/Buttercup-Melody.wav &>/dev/null &");
 		g_start_time = current_time;
 	}
 }

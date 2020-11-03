@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 16:45:18 by marvin            #+#    #+#             */
-/*   Updated: 2020/10/22 03:58:30 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/11/01 13:48:14 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ void	sprites(void)
 			angle -= 2 * M_PI;
 		while (angle - (g_player.rotation_angle * RAD) < -M_PI)
 			angle += 2 * M_PI;
-		if (g_game_data.res.height < g_game_data.res.width)
-			size = (g_game_data.res.height / g_spr[id].distance) * T_S;
-		else
-			size = (g_game_data.res.width / g_spr[id].distance) * T_S;
+		size = (g_game_data.res.width / g_spr[id].distance) * T_S;
 		y = (g_game_data.res.height / 2) - (size / 2);
 		x = (angle - RAD_ANGLE(g_player.rotation_angle)) *
 		g_game_data.res.width / RAD_ANGLE(FOV_ANGLE) +

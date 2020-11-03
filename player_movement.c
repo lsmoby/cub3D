@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 03:20:40 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/10/22 03:21:24 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/10/28 01:21:22 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void			init_player_pos(void)
 			== 'S') && (g_player.rotation_angle = 90))
 				return ;
 			else if ((g_game_data.map.map[j + (i * g_game_data.map.columns)]
-			== 'E') && (g_player.rotation_angle = 180))
+			== 'E') && !(g_player.rotation_angle = 0))
 				return ;
 			else if ((g_game_data.map.map[j + (i * g_game_data.map.columns)]
-			== 'W') && !(g_player.rotation_angle = 0))
+			== 'W') && (g_player.rotation_angle = 180))
 				return ;
 		}
 	}

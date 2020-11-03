@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 15:58:42 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/10/22 05:10:38 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/11/01 13:39:14 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
+# include <stdio.h>
 # include <unistd.h>
 # include "tools/get_next_line.h"
 # include <math.h>
-# include <stdio.h>
 # include <time.h>
 # include "tools/xmalloc.h"
 # define MALLOC xmalloc
@@ -40,6 +40,7 @@
 # define DOWN_KEY 125
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
+# define ESC 53
 # define RAD_ANGLE(x) ((x * M_PI) / 180)
 # define DEG_ANGLE(x) ((x * 180) / M_PI)
 # define NBR_SPR 10000
@@ -203,7 +204,6 @@ char			**ft_split(char const *str, char c);
 int				ft_atoi(const char *ptr);
 void			*ft_calloc(size_t n, size_t size);
 char			*ft_strtrim(char const *s1, char const *set);
-int				has_wall(float x, float y);
 int				render_frames(void);
 int				destroy_window(void);
 int				key_pressed(int key);
@@ -317,5 +317,6 @@ void			move_down(void);
 void			move_right(void);
 void			move_left(void);
 void			new_frame(void);
+int				fix_axis(void);
 
 #endif

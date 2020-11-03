@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 03:17:03 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/10/22 03:17:19 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/11/01 13:40:09 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ int				iswall(float x, float y)
 	ytemp = (int)floor(y / T_S);
 	if (xtemp <= g_game_data.map.columns && xtemp >= 0
 		&& ytemp <= g_game_data.map.rows && ytemp >= 0)
-		return (g_game_data.map.map[xtemp +
-		(ytemp * g_game_data.map.columns)] == '1');
+		return ((g_game_data.map.map[xtemp +
+		(ytemp * g_game_data.map.columns)] == '1') ||
+		g_game_data.map.map[xtemp + (ytemp * g_game_data.map.columns)] == ' ');
 		return (0);
 }
 
@@ -62,6 +63,8 @@ int				key_pressed(int key)
 		g_player.pov_direction = -1;
 	if (key == D_KEY)
 		g_player.pov_direction = 1;
+	if (key == ESC)
+		byebye();
 	return (0);
 }
 

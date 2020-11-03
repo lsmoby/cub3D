@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 15:40:45 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/10/22 23:08:38 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/10/27 23:19:36 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	check_max_w(char *line)
 	g_game_data.res.width = ft_atoi2(line);
 	g_game_data.res.width = g_game_data.res.width > 2560 ?
 			2560 : g_game_data.res.width;
+	g_game_data.res.width = g_game_data.res.width < 20 ?
+			20 : g_game_data.res.width;
 }
 
 void	check_max_h(char *line)
@@ -24,6 +26,8 @@ void	check_max_h(char *line)
 	g_game_data.res.height = ft_atoi2(line);
 	g_game_data.res.height = g_game_data.res.height > 1440 ?
 			1440 : g_game_data.res.height;
+	g_game_data.res.height = g_game_data.res.height < 20 ?
+			20 : g_game_data.res.height;
 }
 
 int		store_resolution(char **line)

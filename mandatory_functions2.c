@@ -6,7 +6,7 @@
 /*   By: ael-ghem <ael-ghem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/22 05:25:09 by ael-ghem          #+#    #+#             */
-/*   Updated: 2020/10/22 05:25:20 by ael-ghem         ###   ########.fr       */
+/*   Updated: 2020/11/01 13:38:12 by ael-ghem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,6 @@ int				check_stuff(char *map, int i, int j, int *p)
 		map[j + ((i + 1) * g_game_data.map.columns)] == ' ' ||
 		map[j + ((i - 1) * g_game_data.map.columns)] == ' ')
 			return (1);
-	}
-	else
-	{
-		if (map[(j + 1) + ((i + 1) * g_game_data.map.columns)] == '0' ||
-		map[(j - 1) + ((i - 1) * g_game_data.map.columns)] == '0'
-		|| map[(j + 1) + ((i - 1) * g_game_data.map.columns)] == '0'
-		|| map[(j - 1) + ((i + 1) * g_game_data.map.columns)] == '0')
-			map[j + (i * g_game_data.map.columns)] = '1';
 	}
 	return (0);
 }
